@@ -1,228 +1,58 @@
-import AceTernityLogo from "@/components/logos/aceternity";
 import SlideShow from "@/components/slide-show";
 import { Button } from "@/components/ui/button";
 import { TypographyH3, TypographyP } from "@/components/ui/typography";
-import { ArrowUpRight, ExternalLink, Link2, MoveUpRight } from "lucide-react";
-import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { RiNextjsFill, RiNodejsFill, RiReactjsFill } from "react-icons/ri";
 import {
-  SiChakraui,
-  SiDocker,
-  SiExpress,
-  SiFirebase,
-  SiJavascript,
-  SiMongodb,
-  SiPostgresql,
-  SiPrisma,
-  SiPython,
-  SiReactquery,
-  SiSanity,
-  SiShadcnui,
-  SiSocketdotio,
-  SiSupabase,
-  SiTailwindcss,
-  SiThreedotjs,
-  SiTypescript,
-  SiVuedotjs,
+  SiPython, SiFastapi, SiStreamlit, SiDocker,
+  SiPytorch, SiTensorflow, SiScikitlearn,
 } from "react-icons/si";
-import { TbBrandFramerMotion } from "react-icons/tb";
+
 const BASE_PATH = "/assets/projects-screenshots";
 
-const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
-  return (
-    <div className="flex flex-col md:flex-row items-center justify-start gap-3 my-3 mb-8">
-      <Link
-        className="font-mono underline flex gap-2"
-        rel="noopener"
-        target="_new"
-        href={live}
-      >
-        <Button variant={"default"} size={"sm"}>
-          Visit Website
-          <ArrowUpRight className="ml-3 w-5 h-5" />
+// ── Link buttons ──────────────────────────────────────────────────────────────
+const ProjectsLinks = ({ live, repo }: { live?: string; repo?: string }) => (
+  <div className="flex flex-col md:flex-row items-center justify-start gap-3 my-3 mb-8">
+    {live && live !== repo && (
+      <Link className="font-mono underline flex gap-2" rel="noopener" target="_new" href={live}>
+        <Button variant="default" size="sm">
+          Live Demo <ArrowUpRight className="ml-2 w-4 h-4" />
         </Button>
       </Link>
-      {repo && (
-        <Link
-          className="font-mono underline flex gap-2"
-          rel="noopener"
-          target="_new"
-          href={repo}
-        >
-          <Button variant={"default"} size={"sm"}>
-            Github
-            <ArrowUpRight className="ml-3 w-5 h-5" />
-          </Button>
-        </Link>
-      )}
-    </div>
-  );
+    )}
+    {repo && (
+      <Link className="font-mono underline flex gap-2" rel="noopener" target="_new" href={repo}>
+        <Button variant="default" size="sm">
+          GitHub <ArrowUpRight className="ml-2 w-4 h-4" />
+        </Button>
+      </Link>
+    )}
+  </div>
+);
+
+// ── Skill badge type ──────────────────────────────────────────────────────────
+export type Skill = { title: string; bg: string; fg: string; icon: ReactNode };
+
+const S = {
+  python:     { title: "Python",       bg: "black", fg: "white", icon: <SiPython /> },
+  fastapi:    { title: "FastAPI",      bg: "black", fg: "white", icon: <SiFastapi /> },
+  streamlit:  { title: "Streamlit",    bg: "black", fg: "white", icon: <SiStreamlit /> },
+  docker:     { title: "Docker",       bg: "black", fg: "white", icon: <SiDocker /> },
+  pytorch:    { title: "PyTorch",      bg: "black", fg: "white", icon: <SiPytorch /> },
+  tensorflow: { title: "TensorFlow",   bg: "black", fg: "white", icon: <SiTensorflow /> },
+  sklearn:    { title: "Scikit-learn", bg: "black", fg: "white", icon: <SiScikitlearn /> },
+  faiss:      { title: "FAISS",        bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>FAISS</span> },
+  langchain:  { title: "LangChain",    bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>LC</span> },
+  mlflow:     { title: "MLflow",       bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>MLf</span> },
+  sql:        { title: "SQL",          bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>SQL</span> },
+  pandas:     { title: "Pandas",       bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>pd</span> },
+  numpy:      { title: "NumPy",        bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>np</span> },
+  gradcam:    { title: "Grad-CAM",     bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>XAI</span> },
+  powerbi:    { title: "Power BI",     bg: "black", fg: "white", icon: <span style={{fontWeight:700,fontSize:11}}>PBI</span> },
 };
 
-export type Skill = {
-  title: string;
-  bg: string;
-  fg: string;
-  icon: ReactNode;
-};
-const PROJECT_SKILLS = {
-  next: {
-    title: "Next.js",
-    bg: "black",
-    fg: "white",
-    icon: <RiNextjsFill />,
-  },
-  chakra: {
-    title: "Chakra UI",
-    bg: "black",
-    fg: "white",
-    icon: <SiChakraui />,
-  },
-  node: {
-    title: "Node.js",
-    bg: "black",
-    fg: "white",
-    icon: <RiNodejsFill />,
-  },
-  python: {
-    title: "Python",
-    bg: "black",
-    fg: "white",
-    icon: <SiPython />,
-  },
-  prisma: {
-    title: "prisma",
-    bg: "black",
-    fg: "white",
-    icon: <SiPrisma />,
-  },
-  postgres: {
-    title: "PostgreSQL",
-    bg: "black",
-    fg: "white",
-    icon: <SiPostgresql />,
-  },
-  mongo: {
-    title: "MongoDB",
-    bg: "black",
-    fg: "white",
-    icon: <SiMongodb />,
-  },
-  express: {
-    title: "Express",
-    bg: "black",
-    fg: "white",
-    icon: <SiExpress />,
-  },
-  reactQuery: {
-    title: "React Query",
-    bg: "black",
-    fg: "white",
-    icon: <SiReactquery />,
-  },
-  shadcn: {
-    title: "ShanCN UI",
-    bg: "black",
-    fg: "white",
-    icon: <SiShadcnui />,
-  },
-  aceternity: {
-    title: "Aceternity",
-    bg: "black",
-    fg: "white",
-    icon: <AceTernityLogo />,
-  },
-  tailwind: {
-    title: "Tailwind",
-    bg: "black",
-    fg: "white",
-    icon: <SiTailwindcss />,
-  },
-  docker: {
-    title: "Docker",
-    bg: "black",
-    fg: "white",
-    icon: <SiDocker />,
-  },
-  yjs: {
-    title: "Y.js",
-    bg: "black",
-    fg: "white",
-    icon: (
-      <span>
-        <strong>Y</strong>js
-      </span>
-    ),
-  },
-  firebase: {
-    title: "Firebase",
-    bg: "black",
-    fg: "white",
-    icon: <SiFirebase />,
-  },
-  sockerio: {
-    title: "Socket.io",
-    bg: "black",
-    fg: "white",
-    icon: <SiSocketdotio />,
-  },
-  js: {
-    title: "JavaScript",
-    bg: "black",
-    fg: "white",
-    icon: <SiJavascript />,
-  },
-  ts: {
-    title: "TypeScript",
-    bg: "black",
-    fg: "white",
-    icon: <SiTypescript />,
-  },
-  vue: {
-    title: "Vue.js",
-    bg: "black",
-    fg: "white",
-    icon: <SiVuedotjs />,
-  },
-  react: {
-    title: "React.js",
-    bg: "black",
-    fg: "white",
-    icon: <RiReactjsFill />,
-  },
-  sanity: {
-    title: "Sanity",
-    bg: "black",
-    fg: "white",
-    icon: <SiSanity />,
-  },
-  spline: {
-    title: "Spline",
-    bg: "black",
-    fg: "white",
-    icon: <SiThreedotjs />,
-  },
-  gsap: {
-    title: "GSAP",
-    bg: "black",
-    fg: "white",
-    icon: "",
-  },
-  framerMotion: {
-    title: "Framer Motion",
-    bg: "black",
-    fg: "white",
-    icon: <TbBrandFramerMotion />,
-  },
-  supabase: {
-    title: "Supabase",
-    bg: "black",
-    fg: "white",
-    icon: <SiSupabase />,
-  },
-};
+// ── Project type ──────────────────────────────────────────────────────────────
 export type Project = {
   id: string;
   category: string;
@@ -232,470 +62,336 @@ export type Project = {
   skills: { frontend: Skill[]; backend: Skill[] };
   content: React.ReactNode | any;
   github?: string;
-  live: string;
+  live?: string;
 };
+
 const projects: Project[] = [
+
+  // ── 1. Pneumonia Detection CNN ─────────────────────────────────────────────
   {
-    id: "codingducks",
-    category: "Coding platform",
-    title: "Coding Ducks",
-    src: "/assets/projects-screenshots/codingducks/landing.png",
+    id: "pneumonia-detection",
+    category: "Deep Learning / Medical AI",
+    title: "Pneumonia Detection CNN + XAI",
+    src: `${BASE_PATH}/pneumonia-detection/landing.png`,
     screenshots: ["landing.png"],
     skills: {
-      frontend: [
-        PROJECT_SKILLS.ts,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.chakra,
-        PROJECT_SKILLS.reactQuery,
-        PROJECT_SKILLS.firebase,
-      ],
-      backend: [
-        PROJECT_SKILLS.node,
-        PROJECT_SKILLS.express,
-        PROJECT_SKILLS.prisma,
-        PROJECT_SKILLS.python,
-        PROJECT_SKILLS.postgres,
-        PROJECT_SKILLS.sockerio,
-      ],
+      frontend: [S.streamlit],
+      backend:  [S.pytorch, S.tensorflow, S.gradcam, S.faiss, S.langchain, S.python],
     },
-    live: "https://www.codingducks.xyz/",
-    github: "https://github.com/Naresh-Khatri/Coding-Ducks",
+    live:   "https://pneumonia-detection-using-cnn.vercel.app",
+    github: "https://github.com/sreenugopireddy/Pneumonia-detection-Using-CNN",
     get content() {
       return (
         <div>
-          <TypographyP className="font-mono text-2xl text-center">
-            Coding ducks = LeetCode + CodePen + CSS Battles
+          <TypographyP className="font-mono text-xl text-center">
+            Pneumonia Detection Using CNN + Explainable AI + PDF-RAG Assistant
           </TypographyP>
-          <TypographyP className="font-mono ">
-            Coding Ducks is your coding dojo — where you level up your skills,
-            battle in real-time code duels, and earn badges like a true code
-            warrior. Track your progress, flex your brain, and climb the
-            leaderboard. Ready to quack the code?
+          <TypographyP className="font-mono">
+            An end-to-end AI system that detects pneumonia from chest X-ray images
+            using a CNN with transfer learning, provides visual explanations via
+            Grad-CAM heatmaps, and generates evidence-grounded medical explanations
+            through a PDF-RAG pipeline — a full Explainable Medical AI Assistant prototype.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
-          <TypographyH3 className="my-4 mt-8">Problems </TypographyH3>
-          <p className="font-mono mb-2">
-            Solve coding problems similar to LeetCode, enhancing your
-            problem-solving skills across various languages.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/codingducks/problems.png`,
-              `${BASE_PATH}/codingducks/problem.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Ducklets</TypographyH3>
-          <p className="font-mono mb-2">
-            Collaborate in real-time with others in a multiplayer coding
-            environment, just like CodePen but with a social twist.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/codingducks/ducklets.png`,
-              `${BASE_PATH}/codingducks/ducklet1.png`,
-              `${BASE_PATH}/codingducks/ducklet2.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">UI Battles </TypographyH3>
 
+          <TypographyH3 className="my-4 mt-8">CNN + Transfer Learning</TypographyH3>
           <p className="font-mono mb-2">
-            Challenge yourself to create UI components with HTML/CSS/JS, and get
-            instant feedback with an automated similarity scoring.
+            MobileNetV2 fine-tuned on the Kaggle Chest X-Ray dataset (5,000+ images).
+            Weighted CrossEntropy handles class imbalance. Achieved 92%+ validation
+            accuracy with strong precision and recall on the held-out test set.
           </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/codingducks/css-battles.png`,
-              `${BASE_PATH}/codingducks/css-battle.png`,
-              `${BASE_PATH}/codingducks/css-battle2.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Contests </TypographyH3>
-          <p className="font-mono mb-2">
-            Organize or participate in coding competitions. Successfully used to
-            host three contests during college.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/codingducks/contests.png`]} />
-          <TypographyH3 className="my-4 mt-8">Playground </TypographyH3>
-          <p className="font-mono mb-2">
-            Test and execute your code instantly in my versatile online code
-            runner.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/codingducks/playground.png`]} />
-          <TypographyH3 className="my-4 mt-8">Users</TypographyH3>
 
+          <TypographyH3 className="my-4 mt-8">Grad-CAM Explainability</TypographyH3>
           <p className="font-mono mb-2">
-            Track your progress, earn badges, and climb the rankings with
-            detailed user profiles and activity tracking.
+            Grad-CAM heatmaps overlay on the X-ray to show exactly which lung
+            regions influenced the model's decision — providing a visual trust
+            signal essential for medical imaging applications.
           </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/codingducks/users.png`,
-              `${BASE_PATH}/codingducks/user.png`,
-            ]}
-          />
+
+          <TypographyH3 className="my-4 mt-8">PDF-Grounded RAG Chatbot</TypographyH3>
+          <p className="font-mono mb-2">
+            Instead of hallucinated AI text, explanations are retrieved from indexed
+            medical PDFs (fact sheets, treatment references, antibiotic guidelines).
+            Pipeline: PDF → chunks → embeddings → FAISS index → semantic search →
+            evidence-grounded answer. Zero hallucination.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Streamlit Dashboard</TypographyH3>
+          <p className="font-mono mb-2">
+            Upload a chest X-ray → instant prediction (Normal / Pneumonia) with
+            confidence score, Grad-CAM overlay, risk indicator, medical explanation,
+            and a sidebar RAG chatbot for follow-up questions.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Tech Stack</TypographyH3>
+          <p className="font-mono mb-2">
+            PyTorch · TorchVision · MobileNetV2 · Grad-CAM · LangChain ·
+            FAISS · Sentence-Transformers · Streamlit · Python
+          </p>
         </div>
       );
     },
   },
-  {
-    id: "couponluxury",
-    category: "Coupon site",
-    title: "Coupon Luxury",
-    src: "/assets/projects-screenshots/couponluxury/landing.png",
-    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png"],
-    live: "https://www.couponluxury.com/",
-    skills: {
-      frontend: [
-        PROJECT_SKILLS.js,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.chakra,
-        PROJECT_SKILLS.vue,
-      ],
-      backend: [
-        PROJECT_SKILLS.node,
-        PROJECT_SKILLS.express,
-        PROJECT_SKILLS.prisma,
-        PROJECT_SKILLS.postgres,
-        PROJECT_SKILLS.docker,
-      ],
-    },
-    get content(): React.JSX.Element {
-      return (
-        <div>
-          <TypographyP className="font-mono ">
-            CouponLuxury is your go-to destination for snagging the best deals
-            without lifting a finger. Whether you&apos;re hunting for the latest
-            discounts or trying to save a buck at your favorite stores,
-            CouponLuxury&apos;s got you covered.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <p className="font-mono mb-2 mt-4">
-            As soon as you land, boom! You&apos;re greeted with the freshest
-            coupons and top-tier deals that&apos;ll make your wallet happy.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/couponluxury/landing.png`]} />
-          <TypographyH3 className="my-4 ">Stores</TypographyH3>
-          <p className="font-mono mb-2">
-            Dive into a comprehensive list of stores, each packed with exclusive
-            deals and discounts. It&apos;s like having a VIP pass to every sale
-            in town.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/couponluxury/stores.png`,
-              `${BASE_PATH}/couponluxury/store.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Categories</TypographyH3>
 
-          <p className="font-mono mb-2">
-            Whatever you&apos;re into—fashion, tech, food—you&apos;ll find it
-            neatly organized here. No more endless scrolling; just pick a
-            category and get the best offers instantly.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/couponluxury/categories.png`]} />
-          <TypographyH3 className="my-4 mt-8">Custom CMS </TypographyH3>
-          <p className="font-mono mb-2">
-            Powered by Vue.js, this bad boy allows us to keep the content
-            dynamic and up-to-date. From flash sales to limited-time offers, my
-            CMS ensures everything&apos;s live and relevant.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/couponluxury/cms-1.png`,
-              `${BASE_PATH}/couponluxury/cms-2.png`,
-            ]}
-          />
-          <p className="font-mono mb-2 mt-5">
-            Plus, I&apos;ve sprinkled in some extra magic like personalized
-            deal recommendations, user-friendly search features, and a sleek,
-            responsive design that works like a charm on any device.
-          </p>
-          <p className="font-mono mb-2">
-            CouponLuxury isn&apos;t just a website; it&apos;s your personal deal-hunting
-            assistant, ensuring you never miss out on a bargain!
-          </p>
-          {/* <TypographyP className="my-4 mt-8">
-          <strong>Misc:</strong>
-          Hosted not one, not two, but THREE coding contests (Codemacha) during
-          college. Safe to say, Coding Ducks passed the vibe check.
-        </TypographyP>
-        <TypographyP className="my-4 mt-8">
-          <strong>Target Audience:</strong>
-          For all the novice coders out there ready to make their mark.
-        </TypographyP> */}
-        </div>
-      );
-    },
-  },
+  // ── 2. Healthcare RAG Assistant ────────────────────────────────────────────
   {
-    id: "the-booking-desk",
-    category: "Travel",
-    title: "The Booking Desk",
-    src: "/assets/projects-screenshots/the-booking-desk/landing.png",
-    screenshots: ["1.png"],
-    live: "https://thebookingdesk.com/",
+    id: "healthcare-rag",
+    category: "AI / RAG System",
+    title: "Healthcare RAG Assistant",
+    src: `${BASE_PATH}/healthcare-rag/landing.png`,
+    screenshots: ["landing.png"],
     skills: {
-      frontend: [
-        PROJECT_SKILLS.ts,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.aceternity,
-        PROJECT_SKILLS.tailwind,
-      ],
-      backend: [PROJECT_SKILLS.sanity],
+      frontend: [S.streamlit],
+      backend:  [S.python, S.faiss, S.langchain, S.mlflow],
     },
+    live:   "https://healthcare-document-rag-assistant-bszat4b6m3dbktycg7yvlc.streamlit.app/",
+    github: "https://github.com/sreenugopireddy/Healthcare-Document-RAG-Assistant",
     get content() {
       return (
         <div>
-          <TypographyP className="font-mono ">
-            The Booking Desk is your ultimate travel consultation hub, designed
-            to turn your wanderlust dreams into reality. With a focus on smooth
-            and visually captivating animations, navigating the site feels like
-            a breeze—it&apos;s almost as if the destinations are calling you.
+          <TypographyP className="font-mono text-xl text-center">
+            Healthcare Document RAG Assistant — Modular RAG System
+          </TypographyP>
+          <TypographyP className="font-mono">
+            A modular Retrieval-Augmented Generation system that processes
+            unstructured healthcare documents — clinical notes, research papers,
+            medical records — enabling intelligent Q&amp;A grounded in your own
+            data. Published on ReadyTensor as a peer-reviewed technical publication.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
-          <p className="font-mono mb-2 mt-8">
-            A sleek, modern interface greets you, featuring the latest travel
-            tips, deals, and must-visit spots around the globe.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/the-booking-desk/landing.png`]} />
-          <TypographyH3 className="my-4 mt-8">Blogs</TypographyH3>
-          <p className="font-mono mb-2">
-            Dive into the curated articles written by travel experts. Whether
-            you&apos;re looking for hidden gems or travel hacks, our blog section has
-            you covered.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/the-booking-desk/blogs.png`,
-              `${BASE_PATH}/the-booking-desk/blog.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Sanity CMS</TypographyH3>
 
+          <TypographyH3 className="my-4 mt-8">Document Ingestion Pipeline</TypographyH3>
           <p className="font-mono mb-2">
-            Keeping everything fresh and up-to-date, I&apos;ve integrated Sanity CMS
-            to manage all the content with ease, ensuring you always get the
-            latest and greatest information.
+            Scalable pipelines chunk and embed healthcare PDFs into a FAISS vector
+            store for fast semantic retrieval. Handles noisy, unstructured clinical text.
           </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/the-booking-desk/cms-1.png`,
-              `${BASE_PATH}/the-booking-desk/cms-2.png`,
-            ]}
-          />
-          <p className="font-mono mb-2 my-8">
-            With a stunning 100% score on Lighthouse, The Booking Desk isn&apos;t
-            just beautiful—it&apos;s built to perform. Whether you&apos;re planning your
-            next adventure or just daydreaming, our site delivers a top-notch
-            experience that&apos;s both informative and enjoyable.
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    id: "portfolio",
-    category: "Portfolio",
-    title: "My Portfolio",
-    src: "/assets/projects-screenshots/portfolio/landing.png",
-    screenshots: ["1.png"],
-    live: "http://nareshkhatri.vercel.app",
-    github:"https://github.com/Naresh-Khatri/Portfolio",
-    skills: {
-      frontend: [
-        PROJECT_SKILLS.ts,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.shadcn,
-        PROJECT_SKILLS.aceternity,
-        PROJECT_SKILLS.framerMotion,
-        PROJECT_SKILLS.tailwind,
-        PROJECT_SKILLS.spline,
-      ],
-      backend: [],
-    },
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono ">
-            Welcome to my digital playground, where creativity meets code in the
-            dopest way possible.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <TypographyH3 className="my-4 mt-8">
-            Beautiful 3D Objects{" "}
-          </TypographyH3>
-          <p className="font-mono mb-2">
-            Did you see that 3D keyboard modal? Yeah! I made that. That
-            interactive keyboard is being rendered in 3D on a webpage 🤯, and
-            pressing each keycap reveals a skill in a goofy way. It&apos;s like
-            typing, but make it art.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/portfolio/landing.png`,
-              `${BASE_PATH}/portfolio/skills.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 ">Space Theme</TypographyH3>
-          <p className="font-mono mb-2">
-            Dark background + floating particles = out-of-this-world cool.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/portfolio/navbar.png`]} />
-          <TypographyH3 className="my-4 mt-8">Projects</TypographyH3>
 
+          <TypographyH3 className="my-4 mt-8">RAG-Powered Q&amp;A</TypographyH3>
           <p className="font-mono mb-2">
-            My top personal and freelance projects — no filler, all killer.
+            LangChain + FAISS retrieves the most relevant document chunks before
+            generating accurate, grounded answers — no hallucinations.
           </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/portfolio/projects.png`,
-              `${BASE_PATH}/portfolio/project.png`,
-            ]}
-          />
-          <p className="font-mono mb-2 mt-8 text-center">
-            This site&apos;s not just a portfolio — it&apos;s a whole vibe.
+
+          <TypographyH3 className="my-4 mt-8">MLflow Experiment Tracking</TypographyH3>
+          <p className="font-mono mb-2">
+            Full experiment tracking across embedding strategies, retrieval
+            configurations, and model versions — reproducible, documented workflows.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Publication</TypographyH3>
+          <p className="font-mono mb-2">
+            Peer-reviewed on ReadyTensor:{" "}
+            <a
+              className="underline text-blue-400"
+              href="https://app.readytensor.ai/publications/healthcare-document-rag-assitant-0EKLQ6QTqtCS"
+              target="_blank" rel="noopener"
+            >
+              Healthcare Document RAG Assistant: A Modular RAG System
+            </a>
           </p>
         </div>
       );
     },
   },
+
+  // ── 3. Financial Anomaly Detection ────────────────────────────────────────
   {
-    id: "ghostchat",
-    category: "Anonymous chat",
-    title: "GhostChat",
-    src: "/assets/projects-screenshots/ghostchat/1.png",
-    screenshots: ["1.png", "2.png", "3.png", "4.png"],
-    live: "https://ghostchat.vercel.app",
-    github:"https://github.com/Naresh-Khatri/GhostChat",
+    id: "anomaly-detection",
+    category: "Data Engineering / ML",
+    title: "Financial Anomaly Detection",
+    src: `${BASE_PATH}/anomaly-detection/landing.png`,
+    screenshots: ["landing.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.js, PROJECT_SKILLS.next, PROJECT_SKILLS.chakra],
-      backend: [PROJECT_SKILLS.supabase],
+      frontend: [S.streamlit],
+      backend:  [S.python, S.fastapi, S.sql, S.pandas, S.sklearn, S.docker],
     },
+    live:   "https://github.com/sreenugopireddy/Anamoly_detection",
+    github: "https://github.com/sreenugopireddy/Anamoly_detection",
     get content() {
       return (
         <div>
-          <TypographyP className="font-mono ">
-            Ghostchat is your go-to spot for sending anonymous messages without
-            leaving a trace. Powered by Supabase, it&apos;s all about keeping things
-            low-key and secure. Whether you&apos;re sharing secrets, giving feedback,
-            or just having some fun, Ghostchat ensures your identity stays
-            hidden, while your voice is heard. Say what you want, without the
-            worry.
+          <TypographyP className="font-mono text-xl text-center">
+            Financial Transaction Analysis &amp; Anomaly Detection System
+          </TypographyP>
+          <TypographyP className="font-mono">
+            End-to-end data pipeline for detecting anomalies, fraud patterns,
+            and risk signals in 50K+ financial transactions — ETL, statistical
+            ML models, A/B testing, and a real-time risk monitoring dashboard.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
-          <SlideShow
-            images={[
-              `${BASE_PATH}/ghostchat/1.png`,
-              `${BASE_PATH}/ghostchat/2.png`,
-              `${BASE_PATH}/ghostchat/3.png`,
-              `${BASE_PATH}/ghostchat/4.png`,
-            ]}
-          />
+
+          <TypographyH3 className="my-4 mt-8">ETL Pipeline</TypographyH3>
+          <p className="font-mono mb-2">
+            Robust ingestion, cleaning, and validation across 50K+ rows —
+            schema enforcement, deduplication, and null-value strategies.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Anomaly &amp; Fraud Detection</TypographyH3>
+          <p className="font-mono mb-2">
+            Isolation Forest + z-score analysis surfaces anomalous transactions,
+            tracks fraud patterns, and generates real-time risk alerts.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">A/B Testing &amp; Evaluation</TypographyH3>
+          <p className="font-mono mb-2">
+            Compared detection models by precision, recall, and false positive
+            rates across threshold configurations using rigorous A/B testing.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Risk Dashboard</TypographyH3>
+          <p className="font-mono mb-2">
+            Real-time monitoring dashboard with anomaly alerts, risk metrics,
+            cohort analysis, and transaction health scores.
+          </p>
         </div>
       );
     },
   },
+
+  // ── 4. Smart Grid Energy Forecasting ─────────────────────────────────────
   {
-    id: "jra",
-    category: "Result analyzer",
-    title: "JNTUA Results Analyzer",
-    src: "/assets/projects-screenshots/jra/1.png",
-    screenshots: ["1.png"],
-    live: "https://naresh-khatri.github.io/JNTUA-result-analyser-spa/#/",
+    id: "smartgrid-forecasting",
+    category: "ML / Time-Series Forecasting",
+    title: "Smart Grid Energy Forecasting",
+    src: `${BASE_PATH}/smartgrid-forecasting/landing.png`,
+    screenshots: ["landing.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.js, PROJECT_SKILLS.vue],
-      backend: [
-        PROJECT_SKILLS.node,
-        PROJECT_SKILLS.mongo,
-        PROJECT_SKILLS.express,
-        PROJECT_SKILLS.docker,
-      ],
+      frontend: [S.streamlit],
+      backend:  [S.python, S.sklearn, S.pandas, S.numpy, S.mlflow],
     },
+    github: "https://github.com/sreenugopireddy",
     get content() {
       return (
         <div>
-          <TypographyP className="font-mono ">
-            JNTUA Results Analyzer was a revolutionary tool designed to simplify
-            and enhance the experience of accessing academic results. It served
-            as a powerful proxy between the JNTUA university results website and
-            its users, offering a range of features that made result analysis
-            faster and more efficient. Here&apos;s what made it stand out:
+          <TypographyP className="font-mono text-xl text-center">
+            Smart Grid Energy Demand Forecasting System
           </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <SlideShow images={[`${BASE_PATH}/jra/1.png`]} />
-          <TypographyH3 className="my-4 mt-8">
-            Effortless Results Retrieval
-          </TypographyH3>
-          {/* Effortless Results Retrieval: */}
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Search all your results using a single roll number, eliminating
-              the tedious task of sifting through thousands of rows on the
-              official site.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Class-Wise Results:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              class-wise results effortlessly by entering a roll number range.
-              No more manual searches or filtering.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Faculty Features:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Faculty members could download batch results in Excel format,
-              making administrative tasks a breeze.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">
-            Enhanced Data Insights:
-          </TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Each result came with additional features including:
-              <ul className="list-disc font-mono ml-6">
-                <li>
-                  <strong>CGPA Calculations: </strong>Easily track your
-                  cumulative grade point average.
-                </li>
-                <li>
-                  <strong>Charts:</strong> Visualize your academic performance
-                  with comprehensive charts.
-                </li>
-                <li>
-                  <strong>Future Projections:</strong> Get insights into
-                  potential future outcomes based on current performance.
-                </li>
-                <li>
-                  <strong> Backlog Counts: </strong>Keep track of your backlog
-                  subjects at a glance.
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Performance:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              The application was significantly faster and more efficient than
-              the official site, providing a smoother user experience.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Downfall:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Unfortunately, as of May 2022, the tool stopped working due to the
-              introduction of CAPTCHA on the official JNTUA results site, which
-              disrupted the seamless functionality of the app. JNTUA Results
-              Analyzer transformed the way students and faculty interacted with
-              academic results, making it a must-have tool until its unexpected
-              shutdown.
-            </li>
-          </ul>
+          <TypographyP className="font-mono">
+            A machine learning pipeline that forecasts electricity demand for
+            smart grid systems — enabling better load balancing, reduced waste,
+            and proactive capacity planning for energy providers.
+          </TypographyP>
+          <ProjectsLinks repo={this.github} />
+
+          <TypographyH3 className="my-4 mt-8">Time-Series Forecasting</TypographyH3>
+          <p className="font-mono mb-2">
+            Random Forest + XGBoost trained on historical consumption data with
+            weather and time-of-day features to forecast hourly and daily demand.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Feature Engineering</TypographyH3>
+          <p className="font-mono mb-2">
+            Lag features, rolling averages, and seasonal indicators capture
+            demand cycles — significantly improving accuracy over baseline models.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Demand Dashboard</TypographyH3>
+          <p className="font-mono mb-2">
+            Interactive Streamlit dashboard shows actual vs. predicted demand,
+            confidence intervals, and anomaly flags for grid operators in real time.
+          </p>
         </div>
       );
     },
   },
+
+  // ── 5. AI Data Analyst ────────────────────────────────────────────────────
+  {
+    id: "ai-data-analyst",
+    category: "AI Agent / NLP",
+    title: "AI Data Analyst Agent",
+    src: `${BASE_PATH}/ai-data-analyst/landing.png`,
+    screenshots: ["landing.png"],
+    skills: {
+      frontend: [S.streamlit],
+      backend:  [S.python, S.langchain, S.pandas, S.fastapi, S.sql],
+    },
+    github: "https://github.com/sreenugopireddy",
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-xl text-center">
+            Conversational AI Agent for Data Analysis
+          </TypographyP>
+          <TypographyP className="font-mono">
+            An LLM-powered data analyst that lets you upload a CSV or connect a
+            database and ask questions in plain English — it writes the SQL/pandas
+            code, executes it, and explains the results back to you. No SQL
+            knowledge required.
+          </TypographyP>
+          <ProjectsLinks repo={this.github} />
+
+          <TypographyH3 className="my-4 mt-8">Natural Language → Code</TypographyH3>
+          <p className="font-mono mb-2">
+            Ask "What are the top 5 products by revenue last quarter?" — the agent
+            generates the query, runs it, and returns a chart plus a plain-English
+            explanation.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Auto Visualization</TypographyH3>
+          <p className="font-mono mb-2">
+            Automatically selects the best chart type (bar, line, scatter, pie)
+            for the query result and renders it interactively in Streamlit.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Multi-source Support</TypographyH3>
+          <p className="font-mono mb-2">
+            Works with CSV uploads, SQLite databases, and PostgreSQL connections —
+            flexible for analysts and non-technical stakeholders alike.
+          </p>
+        </div>
+      );
+    },
+  },
+
+  // ── 6. Power BI Sales Dashboard ───────────────────────────────────────────
+  {
+    id: "powerbi-dashboard",
+    category: "BI / Analytics",
+    title: "Power BI Sales Dashboard",
+    src: `${BASE_PATH}/powerbi-dashboard/landing.png`,
+    screenshots: ["landing.png"],
+    skills: {
+      frontend: [S.powerbi],
+      backend:  [S.sql, S.pandas, S.python],
+    },
+    github: "https://github.com/sreenugopireddy",
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-xl text-center">
+            Enterprise Sales &amp; Revenue Analytics — Power BI
+          </TypographyP>
+          <TypographyP className="font-mono">
+            An interactive Power BI dashboard built during the Microsoft Elevate
+            internship, tracking revenue, profit, regional performance, and KPIs
+            — enabling sales and finance teams to make faster data-driven decisions.
+          </TypographyP>
+          <ProjectsLinks repo={this.github} />
+
+          <TypographyH3 className="my-4 mt-8">12+ DAX Measures</TypographyH3>
+          <p className="font-mono mb-2">
+            Custom DAX formulas for YoY growth, running totals, profit margins,
+            and dynamic ranking — flexible self-serve analytics without waiting
+            on reports. Reduced manual prep time by 80%.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Automated ETL</TypographyH3>
+          <p className="font-mono mb-2">
+            Power Query workflows automate ingestion and transformation from
+            multiple source systems, keeping dashboards always up to date.
+          </p>
+
+          <TypographyH3 className="my-4 mt-8">Regional Drill-down</TypographyH3>
+          <p className="font-mono mb-2">
+            Slicers and drill-throughs let stakeholders explore performance by
+            region, product category, and time period — all in real time.
+          </p>
+        </div>
+      );
+    },
+  },
+
 ];
+
 export default projects;

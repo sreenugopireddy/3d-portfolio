@@ -1,17 +1,12 @@
 .imageContainer {
   display: none;
-  // transform: rotateX(30deg) rotateY(-10deg);
 }
 
-// .imageContainer > img {
-//   border-radius: var(--radius);
-// }
-
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 600px) {  /* ← changed from 1000px */
   .imageContainer {
-    display: block;
-    width: 500px;
-    height: 450px;
+    display: none;
+    width: 350px;      /* ← reduced from 500px to fit smaller screens */
+    height: 350px;     /* ← reduced from 450px */
     position: relative;
 
     img {
