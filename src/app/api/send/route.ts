@@ -3,7 +3,9 @@ import { config } from "@/data/config";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export async function POST(request: Request) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+}
 
 const rateLimit = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = 3;
