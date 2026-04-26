@@ -1,170 +1,186 @@
 # Sreenivasa Reddy Gopireddy — 3D Portfolio
 
-An interactive developer portfolio built with Next.js, featuring a custom 3D skill keyboard, smooth animations, and a space-themed aesthetic — designed to showcase data analytics and AI engineering work.
+An interactive developer portfolio built with Next.js 16, featuring a custom Three.js 3D skill keyboard, GSAP scroll animations, and a space-themed aesthetic — built to showcase data analytics and AI engineering work.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/sreenugopireddy/3d-portfolio)
 
-![Portfolio Preview](public/assets/nav-link-previews/landing.png)
-
-**Live →** [sreenu-gopireddy.vercel.app](https://sreenu-gopireddy.vercel.app)
+**Live →** [sreenivasredy.vercel.app](https://sreenivasredy.vercel.app)
 
 ---
 
-## Features
+## ✨ Features
 
-- **Interactive 3D Keyboard** — Custom Spline keyboard where each keycap represents a data/AI skill, with hover and press interactions
-- **Smooth Animations** — GSAP + Framer Motion powered scroll, hover, and reveal transitions
-- **Space Theme** — Floating particles on a dark canvas
+- **Custom 3D Keyboard** — Built with Three.js. Each keycap shows a real data/AI skill icon with hover lift, glow, press animation, and click sound
+- **Smooth Scroll Animations** — GSAP + Lenis powered scroll transitions with section-aware keyboard rotation
+- **Interactive Skills Section** — Categorized skill cards with brand-color hover-up animation per skill pill
+- **Certifications Section** — 8 verified credentials with Google Drive links
+- **Projects Showcase** — 6 real projects with detailed breakdowns and live/GitHub links
+- **Space Theme** — Floating particles on a deep dark canvas
 - **Light & Dark Mode** — Full theme support with disclaimer toasts
-- **Responsive** — Works across all screen sizes
 - **Contact Form** — Email delivery via Resend
-- **Publications Page** — Showcases research and technical writing
+- **Publications Page** — Research on ReadyTensor
+- **Fully Responsive** — Works across all screen sizes
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
 | Layer | Technologies |
 |---|---|
 | **Framework** | Next.js 16, React 19, TypeScript |
 | **Styling** | Tailwind CSS, Shadcn UI |
-| **Animation** | GSAP, Framer Motion |
-| **3D** | Spline Runtime |
+| **3D** | Three.js (custom keyboard — no Spline dependency) |
+| **Animation** | GSAP, Framer Motion, Lenis |
 | **Email** | Resend |
-| **Misc** | Lenis (smooth scroll), Zod, next-themes |
+| **Misc** | Zod, next-themes, react-icons |
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v18+)
-- npm or yarn
+- Node.js v18+
+- npm
 
 ### Installation
 
-1. **Clone the repository:**
+```bash
+# 1. Clone
+git clone https://github.com/sreenugopireddy/3d-portfolio.git
+cd 3d-portfolio
 
-    ```bash
-    git clone https://github.com/sreenugopireddy/3d-portfolio.git
-    cd 3d-portfolio
-    ```
+# 2. Install dependencies
+npm install --legacy-peer-deps
 
-2. **Install dependencies:**
+# 3. Set up environment variables
+cp .env.example .env.local
+# Add your RESEND_API_KEY to .env.local
 
-    ```bash
-    npm install
-    ```
+# 4. Run dev server
+npm run dev
+```
 
-3. **Set up environment variables:**
+Open [http://localhost:3000](http://localhost:3000)
 
-    Create a `.env.local` file in the root:
+### Environment Variables
 
-    ```bash
-    RESEND_API_KEY=your_resend_api_key_here
-    ```
-
-    | Variable | Required | Description |
-    |---|---|---|
-    | `RESEND_API_KEY` | Yes | API key from [Resend](https://resend.com) for the contact form |
-
-4. **Run the development server:**
-
-    ```bash
-    npm run dev
-    ```
-
-5. Open [http://localhost:3000](http://localhost:3000)
+| Variable | Required | Description |
+|---|---|---|
+| `RESEND_API_KEY` | Yes | From [resend.com](https://resend.com) — powers the contact form |
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 3d-portfolio/
 ├── public/
 │   └── assets/
-│       ├── nav-link-previews/     # Nav hover preview images
-│       └── projects-screenshots/  # Project card screenshots
+│       ├── projects-screenshots/   # One landing.png per project folder
+│       └── nav-link-previews/      # Nav hover images
 ├── src/
 │   ├── app/
-│   │   └── publications/          # Publications page
+│   │   └── publications/           # Publications page
 │   ├── components/
-│   │   ├── header/                # Nav and header
-│   │   ├── sections/              # Page sections (hero, skills, experience, etc.)
-│   │   └── footer/                # Footer
+│   │   ├── three-keyboard.tsx      # Custom Three.js 3D keyboard + MockApplication
+│   │   ├── animated-background.tsx # Keyboard controller + GSAP scroll wiring
+│   │   ├── sections/
+│   │   │   ├── hero.tsx
+│   │   │   ├── skills.tsx          # Categorized skill cards with hover animation
+│   │   │   ├── experience.tsx
+│   │   │   ├── certifications.tsx  # 8 certifications with Drive links
+│   │   │   ├── projects.tsx
+│   │   │   └── contact.tsx
+│   │   └── header/
 │   └── data/
-│       ├── config.ts              # Personal info, social links, SEO
-│       ├── constants.ts           # Skills and experience data
-│       └── projects.tsx           # Projects data
+│       ├── config.ts               # Name, email, socials, SEO, site URL
+│       ├── constants.ts            # Skills (25 keycaps) + experience timeline
+│       └── projects.tsx            # All 6 projects with full content
 ```
 
 ---
 
-## Customization
+## ✏️ Customization
 
-All personal info lives in `src/data/config.ts`:
+Everything personal lives in `src/data/`:
+
+**`config.ts`** — name, email, site URL, social links, SEO keywords
 
 ```ts
 const config = {
   title: "Sreenivasa Reddy | Data Analyst & AI Engineer",
   author: "Sreenivasa Reddy Gopireddy",
   email: "sreenugopireddy24@gmail.com",
-  site: "https://sreenu-gopireddy.vercel.app",
+  site: "https://sreenivasredy.vercel.app",
   githubUsername: "sreenugopireddy",
-  githubRepo: "3d-portfolio",
   social: {
     linkedin: "https://www.linkedin.com/in/sreenu-gopireddy/",
-    github: "https://github.com/sreenugopireddy",
+    github:   "https://github.com/sreenugopireddy",
   },
 };
 ```
 
-Other files to update when adding new content:
-
-| File | What to change |
+| File | What to update |
 |---|---|
+| `src/data/config.ts` | Name, email, site URL, social links, SEO |
+| `src/data/constants.ts` | Skills (keyboard keycaps) + work experience |
 | `src/data/projects.tsx` | Projects, screenshots, descriptions, tech stacks |
-| `src/data/constants.ts` | Skills list and work experience |
-| `src/app/publications/page.tsx` | Research publications |
-| `public/assets/nav-link-previews/` | Nav hover preview images |
-| `public/assets/projects-screenshots/` | Project card screenshots |
+| `src/components/sections/certifications.tsx` | Certifications + Drive links |
+| `public/assets/projects-screenshots/` | `landing.png` per project subfolder |
 
 ---
 
-## Sections
+## 📄 Sections
 
 | Section | Description |
 |---|---|
-| **Hero** | Name, title, resume download, social links |
-| **Skills** | Interactive 3D keyboard with 25 data/AI skills |
-| **Experience** | Microsoft Elevate (AICTE) and Edunet Foundation internships |
-| **Certifications** | AWS, Oracle Cloud, and other certifications |
-| **Projects** | Pneumonia Detection, Healthcare RAG, Financial Anomaly Detection, Smart Grid Forecasting, AI Data Analyst Agent, Power BI Dashboard |
-| **Contact** | Contact form powered by Resend |
-| **Publications** | Research writing on ReadyTensor |
+| **Hero** | Name, title, resume link, GitHub + LinkedIn buttons |
+| **Skills** | 5-category skill cards — Data & Analytics, ML & AI, Cloud & MLOps, Tools |
+| **Experience** | Microsoft Elevate (Power BI Intern) · Edunet Foundation (AI & Data Intern) |
+| **Certifications** | AWS · Oracle Cloud AI · RAG Expert · SQL · Power BI · Zscaler · Tata · UC Davis |
+| **Projects** | Pneumonia CNN · Healthcare RAG · Anomaly Detection · Smart Grid · AI Analyst · Power BI |
+| **Contact** | Contact form via Resend |
+| **Publications** | Healthcare Document RAG Assistant — ReadyTensor |
 
 ---
 
-## Deployment
+## 🌐 Deployment
 
-This site is deployed on **Vercel**.
+Deployed on **Vercel** — zero config.
 
-1. Push your code to GitHub
-2. Connect the repository to [Vercel](https://vercel.com)
-3. Add `RESEND_API_KEY` in the Vercel environment variables dashboard
-4. Vercel deploys automatically on every push to `main`
+```bash
+# Push to GitHub → connect repo in vercel.com → add env var → done
+RESEND_API_KEY=your_key
+```
 
----
-
-## Credits
-
-Built on top of the open source [3D Portfolio](https://github.com/Naresh-Khatri/3d-portfolio) template by [Naresh Khatri](https://github.com/Naresh-Khatri). Customized and extended for data analytics and AI engineering work.
+Every push to `main` auto-deploys.
 
 ---
 
-## Author
+## 🏗 Architecture Note — Custom 3D Keyboard
 
-**Sreenivasa Reddy Gopireddy**  
-[sreenugopireddy24@gmail.com](mailto:sreenugopireddy24@gmail.com) · [LinkedIn](https://www.linkedin.com/in/sreenu-gopireddy/) · [GitHub](https://github.com/sreenugopireddy)
+The portfolio uses a **fully custom Three.js keyboard** (`src/components/three-keyboard.tsx`) instead of a Spline `.spline` file. It exposes a `MockApplication` class with the same API as Spline's `Application` object:
+
+```ts
+app.findObjectByName("keyboard")   // returns a GSAP-animatable proxy object
+app.getAllObjects()                 // returns all 25 keycap proxies
+app.setVariable("heading", label)  // updates skill overlay text
+app.addEventListener("keyDown", cb) // fires on keycap click
+```
+
+This means the original GSAP scroll animations, section transitions, keycap bounce reveals, and sound effects all work identically — just powered by Three.js instead of a binary Spline file. The keyboard is lighter, faster to load, and fully customizable in code.
+
+---
+
+## 🙏 Credits
+
+Built on top of the open source [3D Portfolio](https://github.com/Naresh-Khatri/3d-portfolio) template by [Naresh Khatri](https://github.com/Naresh-Khatri). Heavily customized for data analytics and AI engineering — new 3D keyboard engine, skills section, certifications section, all new projects and content.
+
+---
+
+## 👤 Author
+
+**Sreenivasa Reddy Gopireddy** — Data Analyst & AI Engineer
+
+[sreenugopireddy24@gmail.com](mailto:sreenugopireddy24@gmail.com) · [LinkedIn](https://www.linkedin.com/in/sreenu-gopireddy/) · [GitHub](https://github.com/sreenugopireddy) · [Live Portfolio](https://sreenivasredy.vercel.app)
