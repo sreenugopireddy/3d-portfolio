@@ -221,7 +221,7 @@ const HeroSection = () => {
               className="relative w-full h-full flex items-end justify-center"
             >
               <Image
-                src="/assets/mine.jpg"
+                src="/assets/mine.png"
                 alt={config.author}
                 width={500}
                 height={620}
