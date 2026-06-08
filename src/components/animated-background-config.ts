@@ -1,15 +1,18 @@
 export type Section = "hero" | "about" | "skills" | "experience" | "projects" | "contact";
 
 export const STATES = {
+  // Hero: keyboard hidden off-screen (far right / far below)
+  // so it doesn't appear floating next to the intro text.
+  // It slides in when the user scrolls to the skills section.
   hero: {
     desktop: {
       scale: { x: 0.20, y: 0.20, z: 0.20 },
-      position: { x: 225, y: -100, z: 0 },
+      position: { x: 1800, y: -100, z: 0 },   // pushed far off right edge
       rotation: { x: 0, y: 0, z: 0 },
     },
     mobile: {
       scale: { x: 0.30, y: 0.30, z: 0.30 },
-      position: { x: 0, y: -200, z: 0 },
+      position: { x: 0, y: -1200, z: 0 },     // pushed far below viewport
       rotation: { x: 0, y: 0, z: 0 },
     },
   },
@@ -38,8 +41,8 @@ export const STATES = {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
       position: { x: 0, y: -40, z: 0 },
       rotation: {
-        x: Math.PI / 12, // Slight tilt forward
-        y: -Math.PI / 4, // Rotate opposite to skills
+        x: Math.PI / 12,
+        y: -Math.PI / 4,
         z: 0,
       },
     },
@@ -126,8 +129,6 @@ export const getKeyboardState = ({
 
   const getScaleOffset = () => {
     const width = window.innerWidth;
-    // Reference widths for "ideal" size
-    // Using 1024 for desktop to maintain backward compatibility with previous look
     const DESKTOP_REF_WIDTH = 1280;
     const MOBILE_REF_WIDTH = 390;
 
@@ -135,7 +136,6 @@ export const getKeyboardState = ({
       ? width / MOBILE_REF_WIDTH
       : width / DESKTOP_REF_WIDTH;
 
-    // Clamp values to prevent extremes
     const minScale = isMobile ? 0.5 : 0.5;
     const maxScale = isMobile ? 0.6 : 1.15;
 
