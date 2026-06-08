@@ -132,12 +132,22 @@ const AnimatedBackground = () => {
         onEnter: () => {
           setActiveSection(targetSection);
           const state = getKeyboardState({ section: targetSection, isMobile });
+          // Reveal keyboard the first time user leaves the hero section
+          if (prevSection === "hero") {
+            kbd.visible = true;
+            setKeyboardRevealed(true);
+          }
           gsap.to(kbd.position, { ...state.position, duration: 1 });
           gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
         },
         onLeaveBack: () => {
           setActiveSection(prevSection);
           const state = getKeyboardState({ section: prevSection, isMobile });
+          // Hide keyboard when scrolling back up to hero
+          if (prevSection === "hero") {
+            kbd.visible = false;
+            setKeyboardRevealed(false);
+          }
           gsap.to(kbd.position, { ...state.position, duration: 1 });
           gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
         },
@@ -221,7 +231,13 @@ const AnimatedBackground = () => {
     const kbd = splineApp.findObjectByName("keyboard");
     if (!kbd) return;
 
+    // Keep keyboard fully hidden while the user is on the hero section.
+    // It will be revealed once they scroll down to skills.
     kbd.visible = false;
+    if (activeSection === "hero") {
+      setKeyboardRevealed(false);
+      return;
+    }
     await sleep(400);
     kbd.visible = true;
     setKeyboardRevealed(true);
